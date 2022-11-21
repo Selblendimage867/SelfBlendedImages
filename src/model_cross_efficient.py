@@ -11,8 +11,8 @@ class Detector(nn.Module):
 
     def __init__(self):
         super(Detector, self).__init__()
-        self.net=CrossEfficientViT()
-        self.cel=nn.CrossEntropyLoss(config=config_get())
+        self.net=CrossEfficientViT(config=config_get())
+        self.cel=nn.CrossEntropyLoss()
         self.optimizer=SAM(self.parameters(),torch.optim.SGD,lr=0.001, momentum=0.9)
         
         
@@ -27,6 +27,7 @@ class Detector(nn.Module):
             if i==0:
                 pred_first=pred_cls
             loss_cls=self.cel(pred_cls,target)
+            
             loss=loss_cls
             self.optimizer.zero_grad()
             loss.backward()
