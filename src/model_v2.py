@@ -12,11 +12,9 @@ class Detector(nn.Module):
 
     def __init__(self):
         super(Detector, self).__init__()
-        self.net=timm.create_model('efficientnetv2_s',pretrained =True, num_classes=2)
-        # 'efficientnetv2_s': _cfg(
-        #url='',
-        #input_size=(3, 288, 288), test_input_size=(3, 384, 384), pool_size=(9, 9), crop_pct=1.0),
-        self.cel=nn.CrossEntropyLoss(config=config_get())
+        self.net=timm.create_model('efficientnetv2_rw_t',pretrained =True, num_classes=2)
+        #input_size=(3, 224, 224), test_input_size=(3, 288, 288), pool_size=(7, 7), crop_pct=1.0
+        self.cel=nn.CrossEntropyLoss()
         self.optimizer=SAM(self.parameters(),torch.optim.SGD,lr=0.001, momentum=0.9)
         
         
